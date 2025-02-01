@@ -1,0 +1,30 @@
+/*---------------------------------------
+    Template Name:  Solarox - Lawer Attory Agency HTML Template
+    Description:    Lawer Attory Agency HTML Template
+    Author Name:    Pixelaxis
+    Author URI:     https://themeforest.net/user/pixelaxis
+    Theme URI:      https://cryptdash.vercel.app/
+    Version:        1.0
+-----------------------------------------
+             Table of contents
+-----------------------------------------
+    color variables
+    Typography 
+    mixins
+    Pages styles
+---------------------------------------*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+// Sass files
+@import "variables";
+@import "bootstrap-custom.css";
+@import "typography";
+@import "mixins";
+@import "components";
+@import "header";
+@import "mobile-menu";
+@import "footer";
+@import "pages/home-1";
+@import "pages/error";
+@import "pages/signup";
+@import "loader";
