@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackSimpleIncludePlugin = require("html-webpack-simple-include-plugin");
-const autoprefixer = require('autoprefixer')
+const autoprefixer = require("autoprefixer");
 
 // Define the root directory containing the HTML files
 const rootDirectory = path.resolve(__dirname, "src");
@@ -32,13 +32,15 @@ function generateHtmlPlugins(rootDir) {
 }
 
 const htmlFiles = generateHtmlPlugins(rootDirectory);
-// partial files
-const partialFiles = ['footer-one', 'footer-three', 'footer-two', 'loader','mobile-menu','navbar'].map((partial) => {
+//partial files
+const partialFiles = ["loader", "mobile-menu","navbar"].map((partial) => {
   return {
     tag: `<include-${partial} />`,
-    content: fs.readFileSync(path.resolve(__dirname, `src/partials/${partial}.html`))
-  }
-})
+    content: fs.readFileSync(
+      path.resolve(__dirname, `src/partials/${partial}.html`)
+    ),
+  };
+});
 
 module.exports = {
   entry: {
@@ -46,9 +48,9 @@ module.exports = {
   },
   mode: "development",
   devServer: {
-    watchFiles: ["src/**/*"],
+    watchFiles: ["./src/**/*"],
     hot: true,
-    port: 1111,
+    port: 5000,
   },
   module: {
     rules: [
@@ -66,35 +68,35 @@ module.exports = {
         use: [
           {
             // Adds CSS to the DOM by injecting a `<style>` tag
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             // Interprets `@import` and `url()` like `import/require()` and will resolve them
-            loader: 'css-loader',
-            options:{
-              url:false
-            }
+            loader: "css-loader",
+            options: {
+              url: false,
+            },
           },
           {
             // Loader for webpack to process CSS with PostCSS
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [autoprefixer]
-              }
-            }
+                plugins: [autoprefixer],
+              },
+            },
           },
           {
             // Loads a SASS/SCSS file and compiles it to CSS
-            loader: 'sass-loader'
-          }
-        ]
+            loader: "sass-loader",
+          },
+        ],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,  // Match font files
-        type: 'asset/resource',  // Webpack 5 way to handle assets
+        test: /\.(woff|woff2|eot|ttf|otf)$/i, // Match font files
+        type: "asset/resource", // Webpack 5 way to handle assets
         generator: {
-          filename: 'assets/fonts/[name][ext]',  // Output to 'assets/fonts'
+          filename: "assets/fonts/[name][ext]", // Output to 'assets/fonts'
         },
       },
     ],
@@ -107,13 +109,17 @@ module.exports = {
       filename: "assets/css/index.css",
     }),
     new CopyPlugin({
-      patterns: [{ from: "src/assets", to: "assets" }],
+      patterns: [
+        { from: "src/assets", to: "assets" },
+        // { from: "src/manifest.json", to: "manifest.json" },
+        // { from: "src/service-worker.js", to: "service-worker.js" },
+      ],
     }),
     ...htmlFiles,
-    new HtmlWebpackSimpleIncludePlugin([...partialFiles])
+    new HtmlWebpackSimpleIncludePlugin([...partialFiles]),
   ],
   output: {
-    filename: "assets/js/index.js",
+    filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
